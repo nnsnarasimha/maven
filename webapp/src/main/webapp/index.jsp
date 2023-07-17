@@ -1,5 +1,5 @@
  <div class="row">
-  <div class="col-75">
+  <div class="col-77">
     <div class="container">
       <form action="/action_page.php">
 
