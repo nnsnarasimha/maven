@@ -19,5 +19,12 @@ pipeline {
                 sh "aws s3 cp /var/lib/jenkins/workspace/pipline-boston-build/webapp/ s3://build-backup-boston --recursive"
             }
         }
+        stage("Deploy DEV") {
+            steps {
+                sshagent(['deploy_user']) {
+                    sh "scp -o StrictHostKeyChecking=no webapp/target/webapp.war ec2-user@54.236.41.248:/opt/apache-tomcat-9.0.82/webapps"
+                }
+            }    
+        }
      }
  }
