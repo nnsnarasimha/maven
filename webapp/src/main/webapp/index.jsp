@@ -1,47 +1,105 @@
-<%@ page language="java" contentType="text/html;charset=UTF-8" %>
-<!DOCTYPE html>
-<%@ taglib prefix="template" uri="http://www.jahia.org/tags/templateLib" %>
+<%--
+  ~ Copyright 2014 Stormpath, Inc.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  --%>
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ taglib prefix="jcr" uri="http://www.jahia.org/tags/jcr" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt_rt" %>
-<%@ taglib prefix="functions" uri="http://www.jahia.org/tags/functions" %>
-<%--@elvariable id="currentNode" type="org.jahia.services.content.JCRNodeWrapper"--%>
-<%--@elvariable id="out" type="java.io.PrintWriter"--%>
-<%--@elvariable id="script" type="org.jahia.services.render.scripting.Script"--%>
-<%--@elvariable id="scriptInfo" type="java.lang.String"--%>
-<%--@elvariable id="workspace" type="java.lang.String"--%>
-<%--@elvariable id="renderContext" type="org.jahia.services.render.RenderContext"--%>
-<%--@elvariable id="currentResource" type="org.jahia.services.render.Resource"--%>
-<%--@elvariable id="url" type="org.jahia.services.render.URLGenerator"--%>
-<html lang="${fn:substring(renderContext.request.locale,0,2)}">
-<head>
-    <meta charset="UTF-8">
-    <jcr:nodeProperty node="${renderContext.mainResource.node}" name="jcr:description" inherited="true" var="description"/>
-    <jcr:nodeProperty node="${renderContext.mainResource.node}" name="jcr:createdBy" inherited="true" var="author"/>
-    <c:set var="keywords" value="${jcr:getKeywords(renderContext.mainResource.node, true)}"/>
-    <c:if test="${!empty description}"><meta name="description" content="${description.string}" /></c:if>
-    <c:if test="${!empty author}"><meta name="author" content="${author.string}" /></c:if>
-    <c:if test="${!empty keywords}"><meta name="keywords" content="${keywords}" /></c:if>
-    <title>${fn:escapeXml(renderContext.mainResource.node.displayableName)}</title>
-</head>
 
-<body>
+<t:page>
+    <jsp:attribute name="title">Dashboard</jsp:attribute>
+    <jsp:body>
+        <div class="dashboard">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="jumbotron">
+                        <h1>Dashboard</h1>
 
-<div class="well clearfix">
-    <template:area path="pagecontent"/>
-</div>
+                        <br/>
+                        <br/>
 
-<div class="clearfix">
-    <p class="text-center jahia-admin-copyright"><fmt:message key="jahia.copyright" />&nbsp;<fmt:message
-            key="jahia.company" /></p>
-</div>
-<c:if test="${renderContext.editMode}">
-    <template:addResources type="css" resources="edit.css" />
-</c:if>
-<template:addResources type="javascript" resources="jquery.min.js,admin-bootstrap.js"/>
-<template:addResources type="css" resources="admin-bootstrap.css,admin-server-settings.css"/>
-<template:theme/>
+                        <p>Welcome to your user dashboard!</p>
 
-</body>
-</html>
+                        <p>This page displays some of your account information and also allows you to change custom
+                            data.</p>
+
+                        <p>If you click the Logout link in the navbar at the top of this page, you'll be logged out
+                            of your account and redirected back to the main page of this site.</p>
+                        <br/>
+                        <br/>
+
+                        <h2>Your Account Custom Data</h2>
+                        <br/>
+                        <br/>
+
+                        <p>Your Email: <span class="data">${account.email}</span></p>
+
+                        <c:set var="noBirthday" value="You haven't entered a birthday yet!"/>
+                        <p>Your Birthday: <span class="data">${!empty account.customData['birthday'] ? account.customData['birthday'] : noBirthday}</span></p>
+
+                        <c:set var="noColor" value="You haven't entered a color yet!"/>
+                        <p>Your Favorite Color: <span class="data">${!empty account.customData['color'] ? account.customData['color'] : noColor}</span></p>
+
+                        <br/>
+                        <br/>
+
+                        <p>Stormpath allows you to store up to 10MB of custom user data on
+                            each user account. Data can be anything (in JSON format). The above
+                            example shows two custom fields (<code>birthday</code> and
+                            <code>color</code>), but you can add whatever fields you'd like.</p>
+
+                        <p>You can also store complicated nested JSON documents!</p>
+                        <br/>
+                        <br/>
+
+                        <h2>Update Custom Data</h2>
+                        <br/>
+                        <br/>
+
+                        <p>If you enter values below, we'll send and store these
+                            values with your user account on Stormpath.</p>
+
+                        <p>Please note, we are not doing any validation in this simple
+                            example -- in a real world scenario, you'd want to check user input on the server side!</p>
+                        <br/>
+                        <br/>
+
+                        <form method="post" class="bs-example form-horizontal" action="${pageContext.request.contextPath}/dashboard">
+                            <div class="form-group">
+                                <label for="birthday" class="col-lg-2 control-label">Birthday</label>
+
+                                <div class="col-lg-4">
+                                    <input type="text" class="form-control" id="birthday" name="birthday" placeholder="mm/dd/yyyy"
+                                           value="${!empty account.customData['birthday'] ? account.customData['birthday'] : ''}">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="color" class="col-lg-2 control-label">Favorite Color</label>
+                                <div class="col-lg-4">
+                                    <input type="text" class="form-control" id="color" name="color" placeholder="color"
+                                           value="${!empty account.customData['color'] ? account.customData['color'] : ''}">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-lg-10 col-lg-offset-2">
+                                    <button type="submit" class="btn btn-primary">Update Custom Data</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </jsp:body>
+</t:page>
