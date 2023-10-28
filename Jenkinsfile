@@ -25,13 +25,6 @@ pipeline {
                     sh "scp -o StrictHostKeyChecking=no webapp/target/webapp.war ec2-user@3.81.70.107:/opt/apache-tomcat-9.0.82/webapps/"
            }
         }
-        stage("QA") {
-            steps {
-                sshagent(['deploy_user']) {
-                    sh "scp -o StrictHostKeyChecking=no webapp/target/webapp.war ec2-user@107.23.242.60:/opt/apache-tomcat-9.0.82/webapps/"
-                }
-            }    
-        }
      }
   }
 }
