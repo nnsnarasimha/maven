@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        PATH = "/opt/apache-maven-3.9.5/bin:$PATH"
+        PATH = "/opt/maven3.9.6/bin:$PATH"
     }
     stages {
         stage("Clone Code") {
@@ -13,17 +13,6 @@ pipeline {
             steps {
                 sh "mvn clean install"
             }
-        }
-        stage("S3 Upload Build") {
-            steps {
-                sh "aws s3 cp /var/lib/jenkins/workspace/pipline-boston-build/webapp/ s3://build-backup-boston --recursive"
-            }
-        }
-        stage("DEV") {
-            steps {
-                sshagent(['deploy_user']) {
-                    sh "scp -o StrictHostKeyChecking=no webapp/target/webapp.war ec2-user@3.81.70.107:/opt/apache-tomcat-9.0.82/webapps/"
-           }
         }
      }
   }
