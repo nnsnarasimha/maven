@@ -4,12 +4,12 @@ pipeline {
         PATH = "/opt/maven3.9.6/bin:$PATH"
     }
     stages {
-        stage("Clone Code") {
+        stage("Pull Code") {
             steps {
                git branch: "main", url: "https://github.com/nnsnarasimha/maven.git"
             }
         }
-        stage("Build Code") {
+        stage("Maven Build") {
             steps {
                 sh "mvn clean install"
             }
