@@ -16,7 +16,7 @@ pipeline {
         }
 	stage('build && SonarQube analysis') {
             steps {
-                withSonarQubeEnv('http://35.89.204.239:9000') {
+              //  withSonarQubeEnv('http://35.89.204.239:9000') {
                     // Optionally use a Maven environment you've configured already
                         sh 'mvn clean package sonar:sonar'
 	      }
