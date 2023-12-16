@@ -16,7 +16,7 @@ pipeline {
         }
 	stage('SonarQube analysis') {
 	    steps {
-	    withSonarQubeEnv('sonarqube-10.3') {
+	    withSonarQubeEnv() {
 		sh "${scannerHome}/bin/sonar-scanner"
 		sh "mvn sonar:sonar"
 	      }
