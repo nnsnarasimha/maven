@@ -15,8 +15,10 @@ pipeline {
             }
         }
 	stage('SonarQube analysis') {
-	sh "${scannerHome}/bin/sonar-scanner"
-	sh "mvn sonar:sonar"
+	    steps {
+		sh "${scannerHome}/bin/sonar-scanner"
+		sh "mvn sonar:sonar"
+	   }
 	}
      }
  }
