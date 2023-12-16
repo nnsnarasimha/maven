@@ -18,7 +18,6 @@ pipeline {
             steps {
                 withSonarQubeEnv('10.3') {
                     // Optionally use a Maven environment you've configured already
-                    withMaven(maven:'Maven 3.9.6') {
                         sh 'mvn clean package sonar:sonar'
 	      }
 	   }
