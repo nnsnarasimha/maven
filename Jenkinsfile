@@ -14,11 +14,9 @@ pipeline {
                 sh "mvn clean install"
             }
         }
-	stage('build && SonarQube analysis') {
+	stage('S3 BuildBackup') {
             steps {
-                withSonarQubeEnv('sonarqube-10.3') {
-                    // Optionally use a Maven environment you've configured already
-                        sh 'mvn sonar:sonar'
+                sh 'aws s3 cp /var/lib/jenkins/workspace/Maven-boston-build-pipeline@2/webapp/target/webapp.war s3://boston-build-bkp'
 	      }
 	   }
 	}
