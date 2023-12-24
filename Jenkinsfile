@@ -21,7 +21,7 @@ pipeline {
         }        
         stage("Deploy Staging") {
             steps {
-                sh "scp /var/lib/jenkins/workspace/Maven-boston-build-pipeline@2/webapp/target/webapp.war root@172.31.27.75:/opt/apache-tomcat-10.1.17/webapps/manager"
+                sh "scp -oStrictHostKeyChecking=no host /var/lib/jenkins/workspace/Maven-boston-build-pipeline@2/webapp/target/webapp.war root@172.31.27.75:/opt/apache-tomcat-10.1.17/webapps/manager"
           }
 	}
     }
