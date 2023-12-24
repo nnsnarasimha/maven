@@ -14,10 +14,17 @@ pipeline {
                 sh "mvn clean install"
             }
         }
-	stage('S3 BuildBackup') {
+    	stage('S3 BuildBackup') {
             steps {
                 sh 'aws s3 cp /var/lib/jenkins/workspace/Maven-boston-build-pipeline@2/webapp/target/webapp.war s3://boston-build-bkp'
-	      }
+            }
+        }        
+        stage("Deploy Staging") {
+            steps {
+                sh "scp /var/lib/jenkins/workspace/Maven-boston-build-pipeline@2/webapp/target/webapp.war root@172.31.27.75:/opt/apache-tomcat-10.1.17/webapps/manager"
+              }
+            }
+	  }
 	}
-    }
+     }
  }
