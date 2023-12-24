@@ -1,10 +1,9 @@
-<!DOCTYPE html>
-<html>
-<body>
+// HTML
+<div class="container"> 
+  <h1> Welcome to freeCodeCamp! </h1>
+</div>
 
-<h1>My First Heading</h1>
-
-<p>My first paragraph.</p>
-
-</body>
-</html>
+// CSS
+.container {
+  background-color: skyblue;
+}
