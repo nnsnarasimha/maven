@@ -1,17 +1,23 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html> 
 <head> 
-<title>
-Enter the Attributes
-</title> 
+<title> Example of Date Attribute </title> 
+<script> 
+function viewdate() { 
+var x = document.getElementById("dob").value; 
+document.getElementById("demo").innerHTML = x; 
+</script> 
 </head> 
 <body> 
-<form> 
-Employee Name: <input type="text" placeholder="Enter Your name" Required>
+Employee Name: <input type="text" placeholder="Your Good name"/> 
 <br>
 <br>
-Date of Joining: <input type = "date"> 
-<button type="submit" name="btn">Submit</button>
-</form> 
+Date of Joining: 
+<input type="date" id="dob">
+<br> 
+<button onclick="viewdate()"> Submit 
+</button> 
+<br>
+<h2 id="demo"> </h2> 
 </body> 
 </html>
