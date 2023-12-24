@@ -1,8 +1,17 @@
-<div class="div1">
-  <h1>Welcome to freeCodeCamp! </h1>
-</div>
-<div class="div2">
-  <h1 style="background-color:#17252A">Welcome to freeCodeCamp!</h1>
-</div>
-
-
+<!DOCTYPE html> 
+<html> 
+<head> 
+<title>
+Enter the Attributes
+</title> 
+</head> 
+<body> 
+<form> 
+Employee Name: <input type="text" placeholder="Enter Your name" Required>
+<br>
+<br>
+Date of Joining: <input type = "date"> 
+<button type="submit" name="btn">Submit</button>
+</form> 
+</body> 
+</html>
