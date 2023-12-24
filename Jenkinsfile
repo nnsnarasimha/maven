@@ -21,7 +21,8 @@ pipeline {
         }        
         stage("Deploy Staging") {
             steps {
-                sh "scp -oStrictHostKeyChecking=no host /var/lib/jenkins/workspace/Maven-boston-build-pipeline@2/webapp/target/webapp.war root@172.31.27.75:/opt/apache-tomcat-10.1.17/webapps/manager"
+		sshagent(['deployuser']) {
+                sh "scp -oStrictHostKeyChecking=no /var/lib/jenkins/workspace/Maven-boston-build-pipeline@2/webapp/target/webapp.war ec2-user@172.31.27.75:/opt/apache-tomcat-10.1.17/webapps"
           }
 	}
     }
