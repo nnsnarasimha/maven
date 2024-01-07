@@ -16,7 +16,7 @@ pipeline {
         }
         stage('S3 BuildBackup') {
             steps {
-                sh 'aws s3 cp /var/lib/jenkins/workspace/Maven-boston-build-pipeline@2/webapp/target/webapp.war s3://boston-build-bkp'
+                sh 'aws s cp /var/lib/jenkins/workspace/Maven-boston-build-pipeline@2/webapp/target/webapp.war s3://boston-build-bkp'
             }
         }        
         stage("QA-Deploy") {
